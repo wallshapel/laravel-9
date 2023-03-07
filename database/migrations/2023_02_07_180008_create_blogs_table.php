@@ -26,4 +26,3 @@
         }
     };
 ?>
-Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque alias quaerat placeat reiciendis itaque minus nam nesciunt doloribus neque. Obcaecati veniam, nobis perspiciatis facere officiis provident repudiandae quibusdam optio blanditiis.

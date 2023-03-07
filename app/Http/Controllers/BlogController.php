@@ -4,7 +4,7 @@
 	use Illuminate\Http\Request;  // Necesario para acceder a los valores enviados vía POST.
 	class BlogController {
 		public function __construc() {
-			//$this->middleware('auth', ['except' => ['index', 'detalle']]); // Usuarios no autenticados no tendrán acceso a los métodos de esta clase, excepto a index y detalle. Serán redireccionados al login automáticamente.
+			$this->middleware('auth', ['except' => ['index', 'detalle']]); // Usuarios no autenticados no tendrán acceso a los métodos de esta clase, excepto a index y detalle. Serán redireccionados al login automáticamente.
 		}
 		public function index() {
 			$posts = Blog::get();  // El método get está es intrínseco del modelo Blog y devuelve toda la tabla asociada.

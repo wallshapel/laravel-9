@@ -7,9 +7,9 @@
     class RegistroController extends Controller {
         public function nuevo(Request $req) {
             $req->validate([
-                'name'    => ['required', 'string', 'max:255'],
+                'name'      => ['required', 'string', 'max:255'],
                 'email'     => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'password'  => ['required', 'confirmed', Rules\Password::defaults()]
+                'password'  => ['required', 'confirmed', Rules\Password::defaults()]  // Rules\Password::defaults() Clase que nos permite que se validen contraseñas bien seguras o no.
             ]);
             $usuario = new User;
             $usuario->name = $req->input('name');

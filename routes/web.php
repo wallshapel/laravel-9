@@ -4,18 +4,26 @@
     use App\Http\Controllers\Autenticacion\LoginController;
     use Illuminate\Support\Facades\Route;
     Route::view('/', 'inicio')->name('inicio');
+    Route::prefix('/blog/')->group(function () {  // Todas las rutas dentro de este prefijo comenzarán por /blog/.
+        Route::controller(BlogController::class)->group(function () {  // Todas las rutas dentro de este grupo usaran el controlador BlogController::class
+            Route::get('index', 'index')->name('blog');   
+            Route::post('guardar', 'guardar')->name('guardar');
+            Route::get('detalle/{id}', 'detalle')->name('blog/detalle');       
+            Route::get('editar/{id}', 'editar')->name('blog/editar')->middleware('auth');
+            Route::patch('actualizar/{id}', 'actualizar')->name('actualizar');       
+            Route::delete('eliminar/{id}', 'eliminar')->name('eliminar');   
+        });        
+        Route::view('nuevo', 'blog/nuevo')->name('blog/nuevo');         
+    });  
+    Route::view('/acerca', 'acerca')->name('acerca');      
     Route::view('/contacto', 'contacto')->name('contacto');
-    Route::get('/blog/index', [BlogController::class, 'index'])->name('blog');
-        Route::view('/blog/nuevo', 'blog/nuevo')->name('blog/nuevo');
-        Route::post('/blog/guardar', [BlogController::class, 'guardar'])->name('guardar');
-        Route::get('/blog/detalle/{id}', [BlogController::class, 'detalle'])->name('blog/detalle');       
-        Route::get('/blog/editar/{id}', [BlogController::class, 'editar'])->name('blog/editar')->middleware('auth');
-        Route::patch('/blog/actualizar/{id}', [BlogController::class, 'actualizar'])->name('actualizar');       
-        Route::delete('/blog/eliminar/{id}', [BlogController::class, 'eliminar'])->name('eliminar');       
-    Route::view('/acerca', 'acerca')->name('acerca');
-    Route::view('/autenticacion/registro', 'autenticacion/registro')->name('registro');
-    Route::post('/autenticacion/registro', [RegistroController::class, 'nuevo'])->name('registro');
-    Route::view('/autenticacion/login', 'autenticacion/login')->name('login');
-    Route::post('/autenticacion/login', [LoginController::class, 'iniciar'])->name('login');  // Obligatorio que lleve el name->('login');
-    Route::post('/autenticacion/logout', [LoginController::class, 'cerrar'])->name('logout');
+    Route::prefix('/autenticacion/')->group(function () {  // Todas las rutas dentro de este prefijo comenzarán por /autenticacion/.
+        Route::view('registro', 'autenticacion/registro')->name('registro');
+        Route::post('registro', [RegistroController::class, 'nuevo'])->name('registro');
+        Route::view('login', 'autenticacion/login')->name('login');
+        Route::controller(LoginController::class)->group(function () {  // Todas las rutas dentro de este grupo usaran el controlador LoginController::class
+            Route::post('login', 'iniciar')->name('login');  // Esta ruta es obligatorio que lleve el name->('login');
+            Route::post('logout', 'cerrar')->name('logout');
+        });
+    });    
 ?>
